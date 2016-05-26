@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "PaymentIntro";
+}
+
+<div class="text-center row">
+    <hr />
+    <div class="">
+        <h1>Forum Admin</h1>
+        <p class="text-left">
+            User can donate to FosterUnite by click on donate link on the home page of the
+            FosterUnite web as shown in figure below. <a href="https://pin.net.au">Pin Payments</a> is the payment gateway used
+            for this web application for donation, Pin Payments accept both Visa
+            and Master Card for donation. For the verification of the card for payment, we can
+            reference the test card listed on <a class="btn btn-xs btn-success" href="https://pin.net.au/docs/api/test-cards">Test Cards</a>.
+        </p>
+        <img class="text-center" alt="Admin home page" height="380" width="600" src="~/Image/Donate Page.jpg" />
+        <p class="text-left">
+            Figure above shows the Donate page:<br />
+            Prior to donate to FosterUnite, user have to check the card information is correct by
+            filling form on the donate page and click next. Official Test cards <a class="btn btn-xs btn-success" href="https://pin.net.au/docs/api/test-cards">Test Cards</a>
+        </p>
+        <img class="text-center" alt="Admin home page" height="380" width="600" src="~/Image/Process Donate.jpg" />
+        <p class="text-left">
+            Figure above shows the Process Donate page:<br />
+            After successfully verifying the payment card, user will redirect to process donate page,
+            where they can choose amount to donate with donate description and his email
+            address. (The donate amount is not in dollar, while 100 amount equals to 1 AUD dollar)
+            after filling the form, user can press Donate button to process donate, if donate success,
+            user will redirect to receipt page.
+        </p>
+        <img class="text-center" alt="Admin home page" height="380" width="600" src="~/Image/Donate Receipt.jpg" />
+        <p class="text-left">
+            Figure above shows the Donate Receipt page:<br />
+            After success donation, users can review their donation detail on the screen.
+        </p>
+    </div>
+</div>
+

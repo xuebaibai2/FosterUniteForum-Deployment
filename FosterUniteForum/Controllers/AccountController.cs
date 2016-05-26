@@ -12,6 +12,7 @@ using FosterUniteForum.Models;
 using FosterUniteForum.Data.EntityModel;
 using FosterUniteForum.Domain;
 using FosterUniteForum.Domain.Utility;
+using FosterUniteForum.Authorize;
 
 namespace FosterUniteForum.Controllers
 {
@@ -471,6 +472,14 @@ namespace FosterUniteForum.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        [AjaxOnly]
+        [AllowAnonymous]
+        public ActionResult GetUserFromEamil(string email)
+        {
+            var user = UserManager.FindByEmail(email);
+            return Content(user == null ? "" : user.Email);
         }
 
         #region Helpers

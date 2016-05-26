@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "ForumIntro";
+}
+
+<div class="text-center row">
+    <div class="text-left">
+        <br />
+        <br />
+        <a href="#admin"><span style="font-size:medium">> Forum Admin Configuration</span></a>
+        <br />
+        <a href="#forum"><span style="font-size:medium">> Forum Introduction</span></a>
+    </div>
+    <hr id="admin" />
+    <div class="">
+        <h1>Forum Admin</h1>
+        <p class="text-left">
+            User with admin account can access Forum Admin pages to control the forum layout,
+            forum access management, user group management and user management.
+            <a class="btn btn-xs btn-success" href="http://lyf-forum.azurewebsites.net/ForumAdmin">Go To Admin</a>
+        </p>
+        <img class="text-center" alt="Admin home page" src="~/Image/AdminHome.jpg" height="280" width="600" />
+        <p class="text-left">
+            Admin user can create, edit and remove existing board in admin home page, the Figure above,
+            there are currently 2 board been created the first is foster unite board that contains
+            the foster unite forum. By clicking on the Edit button
+            Admin can configure the content layout of the specified board.
+        </p>
+        <img class="text-center" alt="UpdateBoard" height="380" width="600" src="~/Image/UpdateBoard.jpg" />
+        <p class="text-left">
+            Figure above shows the Update Board page of the Forum Admin:<br />
+            1. Admin can modify the name of the board and
+            description in Update Board section.<br />
+            2. Admin can add Access Mask for that board, access
+            mask is a forum access controller, the first column
+            of Access Mask section is the Access Mask name
+            and the second column is the actual access
+            permissions. By click Add Access Mask at the
+            bottom, admin can define new Access Mask of that
+            board. <br />
+            3. Admin can add new Category to the board by
+            clicking Add Category button at the bottom of the
+            Categories section, these categories that
+            created by admin will display on the Forum home page.
+            Admin can also edit the content of specific
+            category by click on Edit button associated with
+            category name.
+        </p>
+        <img class="text-center" alt="UpdateCateogry" height="380" width="600" src="~/Image/UpdateCategory.jpg" />
+        <p class="text-left">
+            Figure above shows the Update Category page of the Forum Admin:<br />
+            1. Admin can modify the name of the category and
+            sort order.<br />
+            2. Admin can manage forums that associated with
+            specific category in forums section, under this
+            section, admin can modify existing forum by
+            clicking edit button associated with forum name
+            and add new forum by clicking Add
+            Forum button at bottom of the Forum section.
+        </p>
+        <img class="text-center" alt="UpdateCateogry" height="480" width="600" src="~/Image/UpdateForum.jpg" />
+        <p class="text-left">
+            Figure above shows the Update Forum page of the Forum Admin:<br />
+            1. Admin can modify the name, description and sort order of the forum.<br />
+            2. Admin can manage sub-forum under the specific forum, these sub-forums can be
+            shown under the main forum in Forum home page.<br />
+            3. Admin can manage forum access permission under the Access Permission section,
+            access permission is assigning forum access level on the group of users.
+            There are four columns in defining access permission, the first column is User
+            group that referring to the groups of user that are going to be assigned access
+            permission, the second column displays the current access level to the user group,
+            and the third column contains the dropdown list of Access Mask names that been
+            pre-defined at the Update Board page, admin can commit access
+            permission update for user group by clicking Update button on the fourth column.
+        </p>
+
+        <img class="text-center" alt="UpdateCateogry" height="380" width="600" src="~/Image/ManageGroups.jpg" />
+        <p class="text-left">
+            Figure above shows the Manage Groups page of the Forum Admin:<br />
+            Admin can add new user group by typing
+            group name in text box and commit by Add
+            Group button, and modify group name by click
+            on Edit button associated with Group name.
+        </p>
+        <img class="text-center" alt="UpdateCateogry" height="440" width="600" src="~/Image/UserManagement.jpg" />
+        <p class="text-left">
+            Figure above shows the Manage Users page of the Forum Admin:<br />
+            1. Admin can search specific user through username
+            (First name).<br />
+            2. Admin can manage existing user in User List section,
+            admin can add new user by clicking on Add User
+            button and fill the user information to
+            commit add user and can also edit user information
+            by clicking on Edit button associated with each
+            specific username and delete user by
+            clicking on the delete button. By default, after new
+            use been created, the user will be assigned to the
+            Guest user group, which is equal to the foster level 2 users.
+        </p>
+        <img class="text-center" alt="UpdateCateogry" height="380" width="600" src="~/Image/UpdateUser.jpg" />
+        <p class="text-left">
+            Figure above shows the Update User page of the Forum Admin:<br />
+            1. Admin can review and update user profile.<br />
+            2. Admin can assign user group to single user, multiple group for single user can only
+            instantiate the first assigned user group, in that case admin should have delete the
+            previous user's group and then assign new user group to the user.
+        </p>
+        <hr id="forum"/>
+        <h1>Forum Introduction</h1>
+        <img class="text-center" alt="UpdateCateogry" height="380" width="600" src="~/Image/Forum Home Page.jpg" />
+        <p class="text-left">
+            Figure above shows the home page of the Forum:<br />
+            1. Show the logged in user name and log
+            out button.<br />
+            2. Show current time.<br />
+            3. The main forum category (there are
+            currently two main categories which
+            are Foster Unite Community and
+            Volunteer), click to see only the forums
+            under that specific category.<br />
+            4. The single forum with forum description
+            under the forum name and total topics
+            and posts under each forum wit the last post date at the last, click to see the
+            topics under the specific forum see figure below.<br />
+            5. The sub-forum of the main if it exists, displayed by sub-forum name, click to
+            see the topics under the specific sub-forum.
+        </p>
+        <img class="text-center" alt="UpdateCateogry" height="380" width="600" src="~/Image/View Forum.jpg" />
+        <p class="text-left">
+            Figure above shows the ViewForum page of the Forum:<br />
+            1. Navigation bar that indicating where is
+            current directory.<br />
+            2. New topic button to post new topic
+            under current forum.<br />
+            3. One of topic record displaying topic
+            subject with topic creation date and
+            name of author, it also shows the total
+            replies and views on the topic and last
+            post author name with reply date (Clicking on the topic subject to view each topic
+            content, Figure below).<br />
+            4. Indicating the current page of the forum (by default each page showing at most 20
+            topic entry records, and the rest goes into next page).
+        </p>
+        <img class="text-center" alt="UpdateCateogry" height="380" width="600" src="~/Image/View Topic.jpg" />
+        <p class="text-left">
+            Figure above shows the ViewTopic page of the Forum:
+            1. New Reply button to post new reply
+            comment under current topic.<br />
+            2. Author name of the topic (Click on author
+            name to view profile of the author).<br />
+            3. Only user logged in with the same account
+            with topic author can see the Edit link to
+            modify the content of the post.<br />
+            4. Indicating the current page of the View
+            Topic (by default each page showing at
+            most 8 posts, and the rest goes into next
+            page).
+        </p>
+    </div>
+</div>

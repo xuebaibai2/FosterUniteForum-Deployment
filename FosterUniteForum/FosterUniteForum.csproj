@@ -191,10 +191,12 @@
     <Compile Include="Areas\FosterUniteForum\Controllers\TopicController.cs" />
     <Compile Include="Areas\FosterUniteForum\FosterUniteForumAreaRegistration.cs" />
     <Compile Include="Authorize\AdministratorAuthorize.cs" />
+    <Compile Include="Authorize\AjaxOnlyAttribute.cs" />
     <Compile Include="Authorize\GuestAuthorize.cs" />
     <Compile Include="Authorize\MemberAuthorize.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DonateController.cs" />
+    <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Data\EntityModel\AccessMask.cs" />
@@ -271,10 +273,29 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\poststyle.css" />
+    <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Image\AdminHome.jpg" />
+    <Content Include="Image\Create New Post.jpg" />
+    <Content Include="Image\Create New Reply.jpg" />
+    <Content Include="Image\Donate Page.jpg" />
+    <Content Include="Image\Donate Receipt.jpg" />
+    <Content Include="Image\Edit Post.jpg" />
+    <Content Include="Image\Forum Home Page.jpg" />
+    <Content Include="Image\loading.gif" />
+    <Content Include="Image\ManageGroups.jpg" />
+    <Content Include="Image\Process Donate.jpg" />
+    <Content Include="Image\UpdateBoard.jpg" />
+    <Content Include="Image\UpdateCategory.jpg" />
+    <Content Include="Image\UpdateForum.jpg" />
+    <Content Include="Image\UpdateUser.jpg" />
+    <Content Include="Image\UserManagement.jpg" />
+    <Content Include="Image\View Forum.jpg" />
+    <Content Include="Image\View Profile.jpg" />
+    <Content Include="Image\View Topic.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\ForumAdmin\Views\web.config" />
@@ -348,8 +369,6 @@
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
@@ -364,6 +383,8 @@
     <Content Include="Views\Donate\Donate.cshtml" />
     <Content Include="Views\Donate\Index.cshtml" />
     <Content Include="Views\Donate\Receipt.cshtml" />
+    <Content Include="Views\Helper\ForumIntro.cshtml" />
+    <Content Include="Views\Helper\PaymentIntro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\ForumAdmin\Views\Users\" />
