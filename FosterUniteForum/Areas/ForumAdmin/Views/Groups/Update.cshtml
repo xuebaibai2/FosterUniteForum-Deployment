@@ -1,0 +1,50 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model Group
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+}
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+</script>
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+
+        <h3><b>Update Group</b></h3>
+        <hr />
+        if (TempData["GroupUpdateSuccess"] != null)
+        {
+            <p class="dialog_box"><span style="color:red">@TempData["GroupUpdateSuccess"]</span></p>
+        }
+        if (TempData["GroupUpdateFail"] != null)
+        {
+            <p class="dialog_box"><span style="color:red">@TempData["GroupUpdateFail"]</span></p>
+        }
+        <table class="table table-striped">
+            <tr>
+                <td style="width:300px">Name</td>
+                <td>@Html.TextBoxFor(m => m.Name, new { Class = "form-control" })</td>
+                <td>@Html.ValidationMessageFor(m => m.Name, null, new { style = "color:red" })</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input class="btn btn-primary" type="submit" value="Update" />
+                    &nbsp;&nbsp;&nbsp;
+                    @Html.ActionLink(
+                                    "Back",
+                                    "Index",
+                                    null,
+                                    new { Class = "btn btn-default" })
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    }
+</div>
+

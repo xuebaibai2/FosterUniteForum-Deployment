@@ -1,0 +1,24 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model Board
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/FosterUniteForum/Views/Shared/_ForumLayout.cshtml";
+}
+
+
+
+<ul class="list-unstyled" style="background-color:lightgray">
+    <li>
+        @Html.ActionLink(
+       Model.Name,
+       "Index",
+       null,
+       new { Class = "btn btn-default btn-xs" }
+       )
+    </li>
+</ul>
+
+@Html.Partial("_Category", (List<Category>)ViewBag.categoryList)
+
+

@@ -1,0 +1,18 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model ForumUser
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+</script>
+
+<div>
+    @Html.Partial("_UpdateUser", Model)
+</div>
+<div>
+    @Html.Partial("_UserGroupMembership",Model)
+</div>

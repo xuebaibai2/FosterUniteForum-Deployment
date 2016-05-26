@@ -1,0 +1,69 @@
+﻿@using FosterUniteForum.Domain.Utility;
+@model FosterUniteForum.Data.EntityModel.ForumUser
+
+<h3><b>Update User</b></h3>
+<hr />
+@if (TempData["SuccessUpdateUser"] != null)
+{
+    <p class="dialog_box"><span style="color:red">@TempData["SuccessUpdateUser"]</span></p>
+}
+@if (TempData["FailToUpdateUser"] != null)
+{
+    <p class="dialog_box"><span style="color:red">@TempData["FailToUpdateUser"]</span></p>
+}
+@using (Html.BeginForm())
+{
+    @Html.Hidden("submitFlag",SubmitFlagUtilities.UpdateUser.ToString())
+    @Html.Hidden("userGroup",0)
+    @Html.HiddenFor(m=>m.Id)
+    @Html.HiddenFor(m=>m.ProviderId)
+    <table class="table table-striped">
+        <tr>
+            <td>E-mail Address</td>
+            <td>@Html.DisplayFor(m => m.EmailAddress, new { Class = "form-control" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>@Html.TextBoxFor(m => m.FirstName, new { Class = "form-control" })</td>
+            <td>@Html.ValidationMessageFor(m => m.FirstName, null, new { style = "color:red" })</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>@Html.TextBoxFor(m => m.LastName, new { Class = "form-control" })</td>
+            <td>@Html.ValidationMessageFor(m => m.LastName, null, new { style = "color:red" })</td>
+        </tr>
+        <tr>
+            <td>First Visit</td>
+            <td>@Html.DisplayFor(m => m.FirstVisit, new { Class = "form-control" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Latest Visit</td>
+            <td>@Html.DisplayFor(m => m.LastVisit, new { Class = "form-control" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Last Know IP Address</td>
+            <td>@Html.DisplayFor(m => m.LastIP, new { Class = "form-control" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Activated</td>
+            <td>@Html.CheckBoxFor(m => m.Active, new { Class = "form-control" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Deleted</td>
+            <td>@Html.CheckBoxFor(m => m.Deleted, new { Class = "form-control" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input class="btn btn-primary" type="submit" value="Update User" />
+            </td>
+            <td></td>
+        </tr>
+    </table>
+}

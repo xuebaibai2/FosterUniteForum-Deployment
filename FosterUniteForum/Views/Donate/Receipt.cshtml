@@ -1,0 +1,61 @@
+﻿@model FosterUniteForum.Data.EntityModel.DonateReceipt
+
+@{
+    ViewBag.Title = "Receipt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string amount ="$"+(float.Parse(Model.Amount) / 100).ToString("0.00");
+}
+
+<h2 class="text-center">Thank you for your donation</h2>
+
+<hr />
+
+<h3 class="text-center">Here's your receipt</h3>
+<div style="padding-left:35%">
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @amount
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Currency)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Currency)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Donated at
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+    </dl>
+</div>
+<p class="text-center">
+    @Html.ActionLink("Home Page", "Index", "Home", null, new { @class = "btn btn-default btn-lg" })
+</p>

@@ -1,0 +1,57 @@
+﻿@using FosterUniteForum.Domain.Utility;
+
+@model FosterUniteForum.Data.EntityModel.Forum
+
+<div>
+    @using (Html.BeginForm())
+    {
+        <h3><b>Update Forum</b></h3>
+        <hr />
+        <table class="table">
+            <tr>
+                <td style="width:150px">Name</td>
+                <td>@Html.TextBoxFor(m => m.Name, new { Class = "form-control" })</td>
+                <td>@Html.ValidationMessageFor(m => m.Name, null, new { style = "color:red" })</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>@Html.TextAreaFor(m => m.Description, new { Style = "width: 250px; height: 150px; max-height: 150px; resize: none", Class = "form-control" })</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Sort Order</td>
+                <td>@Html.TextBoxFor(m => m.SortOrder, new { Class = "form-control" })</td>
+                <td>@Html.ValidationMessageFor(m => m.SortOrder, null, new { style = "color:red" })</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input class="btn btn-primary" type="submit" value="Update Forum" />
+                    &nbsp;&nbsp;&nbsp;
+                    @Html.ActionLink(
+                       "Back To Category",
+                       "Update",
+                       "Category",
+                       new { categoryName = Model.Category.Name, boardIDnull = Model.Category.BoardId },
+                       new { Class = "btn btn-default" })
+                </td>
+                <td>
+                    @if (TempData["Success"] != null)
+                    {
+                        <p class="dialog_box"><span style="color:red">@TempData["Success"]</span></p>
+                    }
+                    @if (TempData["Fail"] != null)
+                    {
+                        <p class="dialog_box"><span style="color:red">@TempData["Fail"]</span></p>
+                    }
+                </td>
+            </tr>
+        </table>
+        @Html.HiddenFor(m => m.CategoryId)
+        @Html.HiddenFor(m => m.Id)
+        @Html.Hidden("submitFlag", SubmitFlagUtilities.UpdateForum)
+        @Html.Hidden("parentForumID", Model.ParentForumId)
+        @Html.Hidden("preForumName", Model.Name)
+    }
+</div>
+

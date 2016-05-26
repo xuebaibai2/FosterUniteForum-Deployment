@@ -1,0 +1,77 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model Topic
+@{
+    ViewBag.Title = "ViewTopic";
+    Layout = "~/Areas/FosterUniteForum/Views/Shared/_ForumLayout.cshtml";
+    Forum forum = ViewBag.Forum;
+
+}
+
+@* Navigation Menu *@
+<ul class="list-unstyled navilist" style="background-color:lightgray">
+    <li style="float:left">
+        @Html.ActionLink(
+           "Foster Unite",
+           "Index",
+           "Home",
+           null,
+           new { Class = "btn btn-primary btn-xs" }
+           )
+    </li>
+    <li style="float:left">
+        <strong><</strong>
+    </li>
+    <li style="float:left">
+        @Html.ActionLink(
+           forum.Category.Name,
+           "ViewCategory",
+           "Category",
+           new { id = forum.Category.Id },
+           new { Class = "btn btn-primary btn-xs" }
+           )
+    </li>
+    <li style="float:left">
+        <strong><</strong>
+    </li>
+    <li style="float:left">
+        @Html.ActionLink(
+           forum.Name,
+           "ViewForum",
+           "Forum",
+           new { id = forum.Id },
+           new { Class = "btn btn-primary btn-xs" }
+           )
+    </li>
+    <li style="float:left">
+        <strong><</strong>
+    </li>
+    <li>
+        @Html.ActionLink(
+           Model.Title,
+           "ViewTopic",
+           "Topic",
+           new { id = Model.Id },
+           new { Class = "btn btn-default btn-xs" }
+           )
+    </li>
+</ul>
+
+<h3>
+    <b>
+        @Html.ActionLink(Model.Title, "ViewTopic", new { id = Model.Id })
+    </b>
+</h3>
+@{
+    if (ViewBag.isReplyable)
+    {
+        @Html.ActionLink("Post Reply", "Create", "Post", new { id = Model.Id }, new { Class = "btn btn-success" })
+    }
+    else
+    {
+        @Html.ActionLink("Post Reply", "Create", "Post", new { id = Model.Id }, new { Class = "btn btn-success disabled" })
+    }
+}
+<hr />
+<div id="postlist">
+    @Html.Action("RenderPost", new { topicID = Model.Id, page = 1,pageSize = 8 })
+</div>

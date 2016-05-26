@@ -1,0 +1,33 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model Category
+
+<div class="categoryDiv">
+    <table class="table">
+        <thead>
+            <tr class="active" style="font-size:x-small">
+                <th style="width:500px">
+                    <span style="font-size:medium">
+                        @Html.ActionLink(
+                            Model.Name,
+                            "ViewCategory",
+                            new { id = Model.Id },
+                            new { Class = "btn-link" }
+                          )
+                    </span>
+                </th>
+                <th>
+                    TOPICS
+                </th>
+                <th>
+                    POSTS
+                </th>
+                <th>
+                    LAST POST
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @Html.Action("RenderForum","Home", new { categoryID = Model.Id})
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,44 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model Post
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/FosterUniteForum/Views/Shared/_ForumLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.TopicId)
+    <table class="table">
+        <thead>
+            <tr class="active " style="font-size:x-large">
+                <th colspan="2">
+                    <span>
+                        Post Edit
+                    </span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width:100px"><b>Subject</b></td>
+                <td>
+                    @Html.TextBoxFor(m => m.Subject, new { Class = "form-control" })
+                    <span style="color:red"> @Html.ValidationMessageFor(m => m.Subject)</span>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Message</b></td>
+                <td>@Html.TextAreaFor(m => m.Body, new { Class = "form-control", @rows = 10, @style = "resize:none; width:900px" }) </td>
+            </tr>
+            <tr>
+                <td><b>Edit Reason(optional)</b></td>
+                <td>@Html.TextBoxFor(m => m.EditReason, new { Class = "form-control" }) </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center"><input class="btn btn-primary" type="submit" value="Confirm" /></td>
+            </tr>
+        </tbody>
+    </table>
+}
+

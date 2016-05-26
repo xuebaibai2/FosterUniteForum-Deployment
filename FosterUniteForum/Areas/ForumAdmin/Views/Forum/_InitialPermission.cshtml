@@ -1,0 +1,66 @@
+﻿@using FosterUniteForum.Domain.Utility;
+@using FosterUniteForum.Data.EntityModel;
+@model Forum
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+    List<SelectListItem> accessMaskList = ViewBag.accessMaskList;
+}
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+</script>
+
+<div>
+
+    <h3><b>Access Permission</b></h3>
+    <hr />
+    @if (TempData["FailToAddPermission"] != null)
+    {
+        <p class="dialog_box"><span style="color:red">@TempData["FailToAddPermission"]</span></p>
+    }
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Group</td>
+                <td>Access</td>
+                <td>Update</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (ViewBag.groupList.Count != 0)
+            {
+                for (int i = 0; i < ViewBag.groupList.Count; i++)
+                {
+                    using (Html.BeginForm())
+                    {
+                        <tr>
+                            <td>@ViewBag.groupList[i].Name</td>
+                            <td>
+                                @Html.Action("GetAccessMaskName", new { forumID = Model.Id ,groupID = ((Group)ViewBag.groupList[i]).Id, boardID = Model.Category.BoardId })
+                            </td>
+                            <td>@Html.DropDownList("accessMaskFlagnull", accessMaskList, new { Class = "form-control" })</td>
+                            <td>
+                                <input class="btn btn-primary" type="submit" value="Update" />
+                                @Html.Hidden("submitFlag", SubmitFlagUtilities.UpdateForumPermission)
+                                @Html.Hidden("boardIDnull", Model.Category.BoardId)
+                                @Html.Hidden("forumIDnull", Model.Id)
+                                @Html.Hidden("groupIDnull", ((Group)ViewBag.groupList[i]).Id)
+                                @Html.Hidden("preForumName", Model.Name)
+                                @Html.Hidden("categoryIDnull", Model.CategoryId)
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            
+
+        </tbody>
+    </table>
+
+</div>

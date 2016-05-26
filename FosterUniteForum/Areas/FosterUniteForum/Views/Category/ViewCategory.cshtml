@@ -1,0 +1,31 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model Category
+@{
+    ViewBag.Title = "ViewCategory";
+    Layout = "~/Areas/FosterUniteForum/Views/Shared/_ForumLayout.cshtml";
+}
+@* Navigation Menu *@
+<ul class="list-unstyled navilist" style="background-color:lightgray">
+    <li style="float:left"> 
+        @Html.ActionLink(
+           "Foster Unite",
+           "Index",
+           "Home",
+           null,
+           new { Class = "btn btn-primary btn-xs" }
+           )
+    </li>
+    <li style="float:left">
+        <strong><</strong>
+    </li>
+    <li>
+        @Html.ActionLink(
+           Model.Name,
+           "ViewCategory",
+           new { id = Model.Id },
+           new { Class = "btn btn-default btn-xs" }
+           )
+    </li>
+</ul>
+
+@Html.Partial("_Category", Model)

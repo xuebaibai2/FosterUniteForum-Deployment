@@ -1,0 +1,78 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model Forum
+@{
+    ViewBag.Title = "ViewForum";
+    Layout = "~/Areas/FosterUniteForum/Views/Shared/_ForumLayout.cshtml";
+}
+@* Navigation Menu *@
+<ul class="list-unstyled navilist" style="background-color:lightgray">
+    <li style="float:left">
+        @Html.ActionLink(
+           "Foster Unite",
+           "Index",
+           "Home",
+           null,
+           new { Class = "btn btn-primary btn-xs" }
+           )
+    </li>
+    <li style="float:left">
+        <strong><</strong>
+    </li>
+    <li style="float:left">
+        @Html.ActionLink(
+           (string)ViewBag.categoryName,
+           "ViewCategory",
+           "Category",
+           new { id = Model.CategoryId },
+           new { Class = "btn btn-primary btn-xs" }
+           )
+    </li>
+    <li style="float:left">
+        <strong><</strong>
+    </li>
+    <li>
+        @Html.ActionLink(
+           Model.Name,
+           "ViewForum",
+           new { id = Model.Id },
+           new { Class = "btn btn-default btn-xs" }
+           )
+    </li>
+</ul>
+
+<h3>
+    <b>
+        @Html.ActionLink(Model.Name, "ViewForum", new { id = Model.Id })
+    </b>
+</h3>
+@if (ViewBag.isPostable)
+{
+    @Html.ActionLink("New Topic", "Create", "Topic", new { id = Model.Id }, new { Class = "btn btn-success " })
+}
+else
+{
+    @Html.ActionLink("New Topic", "Create", "Topic", new { id = Model.Id }, new { Class = "btn btn-success disabled" })
+}
+
+<table class="table">
+    <thead>
+        <tr class="active" style="font-size:x-small">
+            <th>
+                TOPICS
+            </th>
+            <th>
+                REPLIES
+            </th>
+            <th>
+                VIEWS
+            </th>
+            <th>
+                LAST POST
+            </th>
+        </tr>
+    </thead>
+    <tbody id="topiclist">
+        @Html.Action("RenderTopic", new { forumID = Model.Id,page = 1, pageSize = 20 })
+    </tbody>
+</table>
+

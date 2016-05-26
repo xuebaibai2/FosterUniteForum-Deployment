@@ -1,0 +1,37 @@
+﻿@using FosterUniteForum.Domain;
+@using FosterUniteForum.Data.EntityModel;
+@model List<Forum>
+
+@{
+    ForumService fs = new ForumService();
+}
+
+@foreach (Forum forum in Model)
+{
+    <tr style="font-size:smaller">
+        <td>
+            @Html.ActionLink(forum.Name, "ViewForum", "Forum", new { id = forum.Id }, null)
+
+            <br />
+            @forum.Description
+            <br />
+            @if (fs.GetSubForumListByID(forum.Id).Count != 0)
+            {
+                <span style="color:lightsalmon">Subforums: </span>
+                foreach (Forum subForum in fs.GetSubForumListByID(forum.Id))
+                {
+                    @Html.ActionLink(
+                   subForum.Name,
+                   "ViewForum",
+                   "Forum",
+                   new { id = subForum.Id },
+                   null
+                   )
+                }
+            }
+        </td>
+        <td>@forum.TopicCount</td>
+        <td>@forum.PostCount</td>
+        <td>@forum.LastPosted</td>
+    </tr>
+}

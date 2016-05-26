@@ -1,0 +1,83 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model ForumUser
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+    List<ForumUser> userList = ViewBag.UserList;
+}
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+
+    var preSearch = "_SearchValue";
+    var currentSearch = "";
+    var searchURL = "/ForumAdmin/User/SearchResult?search=";
+    var hrefAttr = "";
+
+    $(document).ready(function () {
+        $('#searchBox').on('change', function () {
+
+            currentSearch = $('#searchBox').val();
+            hrefAttr = searchURL + currentSearch;
+            $('#searchBtn').attr('href', hrefAttr);
+        });
+    });
+
+    $(document).ready(function () {
+        $('#searchBtn').click(function () {
+            preSearch = $('#searchBox').val();
+            $('#searchBox').attr('placeholder', preSearch);
+            $('#searchBox').val("");
+        });
+    });
+</script>
+<div>
+    <h3><b>Users</b></h3>
+    <hr />
+    @if (TempData["SuccessAddUser"] != null)
+    {
+        <p class="dialog_box"><span style="color:red">@TempData["SuccessAddUser"]</span></p>
+    }
+    @if (TempData["FailToAddUser"] != null)
+    {
+        <p class="dialog_box"><span style="color:red">@TempData["FailToAddUser"]</span></p>
+    }
+    <table class="table table-striped">
+        <tr>
+            <td style="width:300px">
+                @Html.TextBoxFor(m => m.FirstName, new { id = "searchBox", Class = "form-control", placeholder = "..Search Name" })
+            </td>
+            <td>
+                @Ajax.ActionLink(
+                           "Search",
+                           "SearchResult",
+                           new
+                           {
+                               search = "_SearchValue"
+                           },
+                           new AjaxOptions
+                           {
+                               HttpMethod = "GET",
+                               UpdateTargetId = "divName",
+                               InsertionMode = InsertionMode.Replace
+                           },
+                           new
+                           {
+                               id = "searchBtn",
+                               Class = "btn btn-info"
+                           }
+                           )
+                &nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Clear", "Index", null, new { Class = "btn btn-default" })
+            </td>
+
+        </tr>
+    </table>
+</div>
+<div id="divName">
+    @Html.Partial("_SearchResult", userList)
+</div>
+@Html.Partial("_AddUser", Model)
+

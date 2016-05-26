@@ -1,0 +1,73 @@
+﻿@model FosterUniteForum.Data.EntityModel.Group
+
+@{
+    ViewBag.Title = "Groups";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+}
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+</script>
+
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <h3><b>Manage Groups</b></h3>
+        <hr />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width:400px">Group Name</th>
+                    <th style="width:200px"></th>
+                    <th style="width:300px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (ViewBag.GroupList.Count != 0)
+                    {
+
+                        for (int i = 0; i < ViewBag.GroupList.Count; i++)
+                        {
+                            <tr>
+                                <td>@ViewBag.GroupList[i].Name</td>
+                                <td>
+                                    @Html.ActionLink(
+                                   "Edit",
+                                   "Update",
+                                   new
+                                   {
+                                       id = ViewBag.GroupList[i].Id
+                                   },
+                                   new { Class = "btn btn-primary" })
+                                    &nbsp;&nbsp;&nbsp;
+                                    @Html.ActionLink(
+                                    "Delete",
+                                    "RemoveGroup",
+                                    new
+                                    {
+                                        id = ViewBag.GroupList[i].Id
+                                    },
+                                    new { Class = "btn btn-warning" })
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+
+                    }
+                }
+                <tr>
+                    <td>@Html.TextBoxFor(m => m.Name, new { placeholder = "Group Name", Class = "form-control" })</td>
+                    <td>
+                        <input class="btn btn-primary" type="submit" value="Add Group" />
+                    </td>
+                    <td>
+                        <span style="color:red">@Html.ValidationMessageFor(m => m.Name)</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+                    }

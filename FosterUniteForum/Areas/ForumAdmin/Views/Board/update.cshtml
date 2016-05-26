@@ -1,0 +1,296 @@
+﻿@using FosterUniteForum.Domain.Utility;
+
+@model FosterUniteForum.Data.EntityModel.Board
+@{
+    ViewBag.Title = "update";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+    var id = ViewContext.RouteData.Values["id"];
+    AccessMaskCollection amCollection = new AccessMaskCollection();
+    Dictionary<int, string> accessMaskList = amCollection.getAccessMaskList();
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+
+    $(document).ready(function ($) {
+        var accessSum = 0;
+        var accessMaskCheckBoxSum = document.getElementById('accessMaskCheckBoxSum');
+        $('.accessMaskCheckBox').click(function () {
+            accessSum = 0;
+            $('.accessMaskCheckBox:checked').each(function (idx, elm) {
+                accessSum += parseInt(elm.value, 10);
+            });
+
+            $('#accessMaskCheckBoxSum').val(accessSum);
+        });
+    });
+
+</script>
+<div>
+    <div>
+        <h3><b>Update Board</b></h3>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("boardID", id)
+            <table class="table">
+                <tr>
+                    <td style="width:300px">Name</td>
+                    <td style="width:300px">@Html.TextBoxFor(m => m.Name, new { placeholder = ViewBag.boardName,Class = "form-control"  })</td>
+                    <td><span style="color:red">@Html.ValidationMessageFor(m => m.Name)</span></td>
+                </tr>
+                <tr>
+                    <td style="width:300px">Board Description</td>
+                    <td style="width:300px">@Html.TextAreaFor(m => m.Description, new { placeholder = ViewBag.boardDescription, Class = "form-control" })</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="width:300px"></td>
+                    <td style="width:300px">
+                        <input id="submit_btn" class="btn btn-info btn-default" type="submit" value="Update" />
+                        @if (TempData["Success"] != null)
+                        {
+                            <p class="dialog_box"><span style="color:red">@TempData["Success"]</span></p>
+                        }
+                    </td>
+                    <td><input type="hidden" name="submitFlag" value="@SubmitFlagUtilities.UpdateBoard" /></td>
+                </tr>
+            </table>
+        }
+    </div>
+
+    <div>
+        <h3><b>Access Masks</b></h3>
+        <hr />
+        @if (TempData["CreateAccessMask"] != null)
+        {
+            <div class="dialog_box"><span style="color:red">@TempData["CreateAccessMask"]</span></div>
+        }@if (TempData["AccessMaskExist"] != null)
+        {
+            <div class="dialog_box"><span style="color:red">@TempData["AccessMaskExist"]</span></div>
+        }
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Access Mask Name</th>
+                    <th>Access Flag(s)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (ViewBag.accessMaskList.Count != 0)
+                    {
+                        foreach (KeyValuePair<string, List<string>> item in ViewBag.accessMaskList)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Key
+                                </td>
+                                <td>
+                                    @string.Join(", ", item.Value.ToArray())
+                                </td>
+                                <td>
+                                    @Html.ActionLink(
+                                   "Edit",
+                                   "Update",
+                                   "AccessMask",
+                                   new { maskName = item.Key, boardIDnull = id },
+                                   new { Class = "btn btn-primary" })
+                                    &nbsp;&nbsp;&nbsp;
+                                    @Html.ActionLink(
+                                    "Delete",
+                                    "RemoveAccessMask",
+                                    "AccessMask",
+                                    new { maskName = item.Key, boardID = id },
+                                    new { Class = "btn btn-warning" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+                <tr>
+                    <td><input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#accessMaskModal" value="Add Access Mask" /></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h3><b>Categories</b></h3>
+        <hr />
+        @if (TempData["CreateCategory"] != null)
+        {
+            <div class="dialog_box"><span style="color:red">@TempData["CreateCategory"]</span></div>
+        }
+        @if (TempData["CategoryExist"] != null)
+        {
+            <div class="dialog_box"><span style="color:red">@TempData["CategoryExist"]</span></div>
+        }
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th>Sort order</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (ViewBag.categoryList.Count != 0)
+                    {
+                        foreach (var category in ViewBag.categoryList)
+                        {
+                            <tr>
+                                <td>@category.Name</td>
+                                <td>@category.SortOrder</td>
+                                <td>
+                                    @Html.ActionLink(
+                                   "Edit",
+                                   "Update",
+                                   "Category",
+                                   new { categoryName = category.Name, boardIDnull = id },
+                                   new { Class = "btn btn-primary" })
+                                    &nbsp;&nbsp;&nbsp;
+                                    @Html.ActionLink(
+                                    "Delete",
+                                    "RemoveCategory",
+                                    "Category",
+                                    new { categoryName = category.Name, boardID = id },
+                                    new { Class = "btn btn-warning" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+                <tr>
+                    <td><input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#categoryModal" value="Add Category" /></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="accessMaskModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create Access Mask</h4>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.Hidden("boardID", id)
+                    <div class="modal-body">
+                        <table class="table-striped" style="position:relative; left:27% ">
+                            <tr>
+                                <td>Access Mask Name &nbsp;&nbsp;&nbsp;</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.AccessMask.SingleOrDefault().Name, new { Name = "maskName", id = "maskName", Class = "form-control" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span class="field-validation-valid" data-valmsg-replace="true" data-valmsg-for="maskName" style="color:red"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <table>
+                            <tr>
+                                <td colspan="2"><b style="margin-left:15em">Access Flag</b></td>
+                            </tr>
+                            @for (int i = 0; i < accessMaskList.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <label style="margin-right:10em;margin-left:10em" for="'amlID'+@accessMaskList.ElementAt(i).Key">
+                                            @accessMaskList.ElementAt(i).Value
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <input class="accessMaskCheckBox"
+                                               type="checkbox"
+                                               id="'amlID'+@accessMaskList.ElementAt(i).Key"
+                                               name="accessMask"
+                                               value="@accessMaskList.ElementAt(i).Key" />
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        @Html.HiddenFor(m => m.Name, new { Value = ViewBag.boardName })
+                        @Html.HiddenFor(m => m.Description, new { Value = ViewBag.boardDescription })
+                        <input type="hidden" name="submitFlag" value="@SubmitFlagUtilities.CreateAccessMask" />
+                        <input id="accessMaskCheckBoxSum" type="hidden" name="accessFlag" value="" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Create" />
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="categoryModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create Category</h4>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.Hidden("boardID", id)
+                    <div class="modal-body">
+                        <table class="table">
+                            <tr>
+                                <td>Category Name</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.Category.SingleOrDefault().Name, new { Name = "categoryName", id = "categoryName", Class = "form-control" })
+                                </td>
+
+                                <td>
+                                    <span class="field-validation-valid" data-valmsg-replace="true" data-valmsg-for="categoryName" style="color:red"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sort Order</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.Category.SingleOrDefault().SortOrder, new { Name = "categorySortOrder", id = "categorySortOrder", Class = "form-control" })
+                                </td>
+                                <td>
+                                    <span class="field-validation-valid" data-valmsg-replace="true" data-valmsg-for="categorySortOrder" style="color:red"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        @Html.HiddenFor(m => m.Name, new { Value = ViewBag.boardName })
+                        @Html.HiddenFor(m => m.Description, new { Value = ViewBag.boardDescription })
+                        <input type="hidden" name="submitFlag" value="@SubmitFlagUtilities.CreateCategory" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Create" />
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

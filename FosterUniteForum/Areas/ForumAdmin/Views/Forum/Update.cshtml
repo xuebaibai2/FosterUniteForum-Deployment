@@ -1,0 +1,102 @@
+﻿@using FosterUniteForum.Domain.Utility;
+@using FosterUniteForum.Data.EntityModel;
+@model Forum
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+    $(document).ready(function () {
+        $("#forumDescription").val('');
+    });
+</script>
+
+<div>
+    @Html.Partial("_UpdateForum", Model)
+    @Html.Partial("_SubForums", Model)
+
+
+    <div>
+        <h3><b>Access Permission</b></h3>
+        <hr />
+        @if (TempData["FailToAddPermission"] != null)
+        {
+            <p class="dialog_box"><span style="color:red">@TempData["FailToAddPermission"]</span></p>
+        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Group</td>
+                    <td>Access</td>
+                    <td>Update</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ForumAccess item in ViewBag.forumAccessList)
+                {
+                    @Html.Partial("_Permissions", item)
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="forumModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create Sub-Forum</h4>
+                </div>
+                @using (Html.BeginForm())
+                {
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <td style="width:150px">Sub-Forum Name </td>
+                            <td>
+                                @Html.TextBoxFor(m => m.Name, new { Value = "", placeholder = "Sub-Forum Name", Class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.ValidationMessageFor(m => m.Name, null, new { style = "color:red" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td colspan="2">
+                                @Html.TextAreaFor(m => m.Description, new { Name = "forumDescription", id = "forumDescription", Style = "width: 250px; height: 150px; max-height: 150px; resize: none", Class = "form-control", placeholder = "Sub-Forum Description" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sort Order</td>
+                            <td>
+                                @Html.TextBoxFor(m => m.SortOrder, new { Value = "", placeholder = "Sub-Forum Sort Order", Class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.ValidationMessageFor(m => m.SortOrder, null, new { style = "color:red" })
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    @Html.HiddenFor(m => m.Id)
+                    @Html.HiddenFor(m => m.CategoryId)
+                    @Html.Hidden("preForumName", Model.Name)
+                    <input type="hidden" name="submitFlag" value="@SubmitFlagUtilities.CreateSubForum" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Create" />
+                </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

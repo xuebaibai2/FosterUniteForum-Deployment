@@ -1,0 +1,15 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model ForumUser
+@{
+    ViewBag.Title = "ViewProfile";
+    Layout = "~/Areas/FosterUniteForum/Views/Shared/_ForumLayout.cshtml";
+}
+
+<h3>User Profile</h3>
+<p><b>First name</b>: @Model.FirstName</p>
+<p><b>Last name</b>: @Model.LastName</p>
+<p><b>Gender</b>: @Model.Gender</p>
+<p><b>Company Name</b>: @Model.CompanyName</p>
+<p><b>Company Address</b>: @Model.CompanyAddress</p>
+<p><b>Last visit</b>: @Model.LastVisit</p>
+<p><b>Last IP</b>: @Model.LastIP</p>

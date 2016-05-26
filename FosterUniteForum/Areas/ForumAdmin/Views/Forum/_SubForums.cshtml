@@ -1,0 +1,71 @@
+﻿@model FosterUniteForum.Data.EntityModel.Forum
+
+<div>
+    <h3><b>Sub-Forums</b></h3>
+    <hr />
+    @if (TempData["CreateSubForum"] != null)
+    {
+        <p class="dialog_box"><span style="color:red">@TempData["CreateSubForum"]</span></p>
+    }
+    @if (TempData["SubForumExist"] != null)
+    {
+        <p class="dialog_box"><span style="color:red">@TempData["SubForumExist"]</span></p>
+    }
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Forum name</td>
+                <td>Description</td>
+                <td>Sort Order</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (ViewBag.forumList.Count != 0)
+                {
+                    foreach (var subForum in ViewBag.forumList)
+                    {
+                        <tr>
+                            <td>@subForum.Name</td>
+                            <td>@subForum.Description</td>
+                            <td>@subForum.SortOrder</td>
+                            <td>
+                                @Html.ActionLink(
+                                   "Edit",
+                                   "UpdateRedirect",
+                                   new {
+                                       forumName = subForum.Name,
+                                       categoryIDnull = subForum.CategoryId,
+                                       parentForumID = Model.Id
+                                   },
+                                   new { Class = "btn btn-primary" })
+                                &nbsp;&nbsp;&nbsp;
+                                @Html.ActionLink(
+                                    "Delete",
+                                    "RemoveForum",
+                                    new
+                                    {
+                                        forumName = subForum.Name,
+                                        categoryID = subForum.CategoryId,
+                                        boardID = Model.Category.BoardId,
+                                        categoryName = Model.Category.Name,
+                                        parentForumID = Model.Id
+                                    },
+                                    new { Class = "btn btn-warning" })
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            <tr>
+                <td><input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#forumModal" value="Add Forum" /></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

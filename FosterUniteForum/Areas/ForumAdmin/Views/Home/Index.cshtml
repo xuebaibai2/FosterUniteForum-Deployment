@@ -1,0 +1,81 @@
+﻿@using FosterUniteForum.Domain
+@model FosterUniteForum.Areas.ForumAdmin.Models.BoardModel
+
+@{
+    ViewBag.Title = "Forum Admin";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+    BoardService bs = new BoardService();
+    int boardCount;
+    List<string> boardNameList;
+    List<string> boardDescriptionList;
+    if (ViewBag.BoardListCount != null &&
+        ViewBag.BoardNameList != null &&
+        ViewBag.BoardDescriptionList != null)
+    {
+        boardCount = ViewBag.BoardListCount;
+        boardNameList = ViewBag.BoardNameList;
+        boardDescriptionList = ViewBag.BoardDescriptionList;
+    }
+    else
+    {
+        boardCount = 0;
+        boardNameList = null;
+        boardDescriptionList = null;
+    }
+
+}
+<div>
+    <div>
+        <h3><b>Forum Admin</b></h3>
+        <hr />
+        <h3>Boards</h3>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Board Name</th>
+                            <th>Description</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    @{
+                        if (boardCount != 0)
+                        {
+                            for (int i = 0; i < boardCount; i++)
+                            {
+                                <tr>
+                                    <td>@boardNameList[i]</td>
+                                    <td>@boardDescriptionList[i]</td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Update", "Board",
+                               new { id = bs.GetBoardID(boardNameList[i]) }, new { Class = "btn btn-primary" })
+                                        &nbsp;&nbsp;
+                                        @Html.ActionLink("Delete", "RemoveBoard",
+                               new { boardName = boardNameList[i] }, new { Class = "btn btn-warning" })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+
+                    <tr>
+                        <td>@Html.TextBoxFor(m => m.BoardName)</td>
+                        <td>@Html.TextBoxFor(m => m.BoardDescription)</td>
+                        <td>
+                            <input type="submit" value="Add Board" />
+                        </td>
+                    </tr>
+                </table>
+                <span style="color:red"> @Html.ValidationMessageFor(m => m.BoardName)</span>
+            </div>
+                        }
+    </div>
+    <div>
+        <h3><b>Staticstics</b></h3>
+        <hr />
+    </div>
+</div>

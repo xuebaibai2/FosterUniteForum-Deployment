@@ -1,0 +1,196 @@
+﻿@using FosterUniteForum.Domain.Utility;
+@model FosterUniteForum.Data.EntityModel.Category
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+    string preCategoryName = Model.Name;
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+    $(document).ready(function () {
+        $("#forumDescription").val('');
+    });
+</script>
+<div>
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("preCategoryName", preCategoryName)
+            @Html.Hidden("submitFlag", SubmitFlagUtilities.UpdateCategory)
+            @Html.HiddenFor(m => m.BoardId)
+            @Html.HiddenFor(m => m.Id)
+            <h3><b>Update Category</b></h3>
+            <hr />
+            <table class="table">
+                <tr>
+                    <td style="width:300px">Name</td>
+                    <td style="width:300px">
+                        @Html.TextBoxFor(m => m.Name, new { Class = "form-control" })
+                    </td>
+                    <td style="width:300px">
+                        @Html.ValidationMessageFor(m => m.Name, null, new { style = "color:red" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sort Order</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.SortOrder, new { Class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.ValidationMessageFor(m => m.SortOrder, null, new { style = "color:red" })
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <input class="btn btn-primary" type="submit" value="Update" />
+                        &nbsp;&nbsp;&nbsp;
+                        @Html.ActionLink(
+                       "Back",
+                       "Update",
+                       "Board",
+                       new { id = Model.BoardId },
+                       new { Class = "btn btn-default" })
+                        &nbsp;&nbsp;&nbsp;
+                        @if (TempData["Success"] != null)
+                        {
+                            <p class="dialog_box"><span style="color:red">@TempData["Success"]</span></p>
+                        }
+                        @if (TempData["Fail"] != null)
+                        {
+                            <p class="dialog_box"><span style="color:red">@TempData["Fail"]</span></p>
+                        }
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+
+    <div>
+        <h3><b>Forums</b></h3>
+        <hr />
+        @if (TempData["CreateForum"] != null)
+            {
+            <p class="dialog_box"><span style="color:red">@TempData["CreateForum"]</span></p>
+        }
+        @if (TempData["ForumExist"] != null)
+            {
+            <p class="dialog_box"><span style="color:red">@TempData["ForumExist"]</span></p>
+        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Forum name</td>
+                    <td>Description</td>
+                    <td>Sort Order</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (ViewBag.forumList.Count != 0)
+                    {
+                        foreach (var forum in ViewBag.forumList)
+                        {
+                            <tr>
+                                <td>@forum.Name</td>
+                                <td>@forum.Description</td>
+                                <td>@forum.SortOrder</td>
+                                <td>
+                                    @Html.ActionLink(
+                                   "Edit",
+                                   "UpdateRedirect",
+                                   "Forum",
+                                   new {
+                                       forumName = forum.Name,
+                                       categoryIDnull = forum.Category.Id,
+                                       parentForumID = (int?)null
+                                   },
+                                   new { Class = "btn btn-primary" })
+                                    &nbsp;&nbsp;&nbsp;
+                                    @Html.ActionLink(
+                                    "Delete",
+                                    "RemoveForum",
+                                    "Forum",
+                                    new {
+                                        forumName = forum.Name,
+                                        categoryID = forum.Category.Id,
+                                        boardID = Model.BoardId,
+                                        categoryName = Model.Name,
+                                        parentForumID = (int?)null
+                                    },
+                                    new { Class = "btn btn-warning" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+                <tr>
+                    <td><input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#forumModal" value="Add Forum" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="forumModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create Forum</h4>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    <div class="modal-body">
+                        <table class="table">
+                            <tr>
+                                <td style="width:150px">Forum Name </td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.Forum.FirstOrDefault().Name, new { Name = "forumName", id = "forumName", Value = "", Class = "form-control"  })
+                                </td>
+                                <td>
+                                    <span class="field-validation-valid" data-valmsg-replace="true" data-valmsg-for="forumName" style="color:red"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td colspan="2">
+                                    @Html.TextAreaFor(m => m.Forum.FirstOrDefault().Description, new { Name = "forumDescription", id = "forumDescription", Style = "width: 250px; height: 150px; max-height: 150px; resize: none", Class = "form-control" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sort Order</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.Forum.FirstOrDefault().SortOrder, new { Name = "forumSortOrder", id = "forumSortOrder", Value = "",  Class = "form-control"  })
+                                </td>
+                                <td>
+                                    <span class="field-validation-valid" data-valmsg-replace="true" data-valmsg-for="forumSortOrder" style="color:red"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        @Html.HiddenFor(m => m.Id)
+                        @Html.HiddenFor(m => m.BoardId, new { Name = "boardIDnull", Value = Model.BoardId })
+                        @Html.HiddenFor(m => m.Name, new { Name = "categoryName", Value = Model.Name })
+                        @Html.Hidden("parentForumID", null)
+                        <input type="hidden" name="submitFlag" value="@SubmitFlagUtilities.CreateForum" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Create" />
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

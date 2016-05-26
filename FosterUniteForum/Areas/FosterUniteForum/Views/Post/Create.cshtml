@@ -1,0 +1,89 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model Post
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/FosterUniteForum/Views/Shared/_ForumLayout.cshtml";
+    Forum forum = ViewBag.Forum;
+}
+
+@* Navigation Menu *@
+<ul class="list-unstyled navilist" style="background-color:lightgray">
+    <li style="float:left">
+        @Html.ActionLink(
+           "Foster Unite",
+           "Index",
+           "Home",
+           null,
+           new { Class = "btn btn-primary btn-xs" }
+           )
+    </li>
+    <li style="float:left">
+        <strong><</strong>
+    </li>
+    <li style="float:left">
+        @Html.ActionLink(
+           forum.Category.Name,
+           "ViewCategory",
+           "Category",
+           new { id = forum.Category.Id },
+           new { Class = "btn btn-primary btn-xs" }
+           )
+    </li>
+    <li style="float:left">
+        <strong><</strong>
+    </li>
+    <li style="float:left">
+        @Html.ActionLink(
+           forum.Name,
+           "ViewForum",
+           "Forum",
+           new { id = forum.Id },
+           new { Class = "btn btn-primary btn-xs" }
+           )
+    </li>
+    <li style="float:left">
+        <strong><</strong>
+    </li>
+    <li>
+        <span class="btn btn-default btn-xs">Reply</span>
+    </li>
+</ul>
+
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("mainPostID", Model.Id)
+    <table class="table">
+        <thead>
+            <tr class="active " style="font-size:x-large">
+                <th colspan="2">
+                    <span>
+                        Reply For @Html.ActionLink(
+                                 Model.Subject,
+                                 "ViewTopic",
+                                 "Topic",
+                                 new { id = Model.Id },
+                                 new { Class = "btn-link" })
+                    </span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width:100px"><b>Subject</b></td>
+                <td>
+                    @Html.TextBoxFor(m => m.Subject, new { Class = "form-control"})
+                    <span style="color:red"> @Html.ValidationMessageFor(m => m.Subject)</span>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Message</b></td>
+                <td>@Html.TextArea("message", new { Class = "form-control", @rows = 10, @style = "resize:none; width:900px" })</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center"><input class="btn btn-primary" type="submit" value="Create" /></td>
+            </tr>
+        </tbody>
+    </table>
+}
+

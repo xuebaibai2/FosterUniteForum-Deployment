@@ -1,0 +1,63 @@
+﻿@using FosterUniteForum.Domain.Utility;
+@using FosterUniteForum.Data.EntityModel;
+@model List<Group>
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+    List<SelectListItem> accessMaskList = ViewBag.accessMaskList;
+}
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+</script>
+
+<div>
+
+    <h3><b>Access Permission</b></h3>
+    <hr />
+    @if (TempData["FailToAddPermission"] != null)
+    {
+        <p class="dialog_box"><span style="color:red">@TempData["FailToAddPermission"]</span></p>
+    }
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Group</td>
+                <td>Access</td>
+                <td>Update</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model.Count != 0)
+            {
+                foreach (Group group in Model)
+                {
+                    using (Html.BeginForm())
+                    {
+                        <tr>
+                            <td>@group.Name</td>
+                            <td></td>
+                            <td>@Html.DropDownList("accessMaskFlagnull", accessMaskList, new { Class = "form-control" })</td>
+                            <td>
+                                <input class="btn btn-primary" type="submit" value="Update" />
+                                @Html.Hidden("submitFlag", SubmitFlagUtilities.UpdateForumPermission)
+                                @Html.Hidden("boardIDnull", (int)ViewBag.boardID)
+                                @Html.Hidden("forumIDnull", (int)ViewBag.forumID)
+                                @Html.Hidden("groupIDnull", group.Id)
+                                @Html.Hidden("preForumName", (string)ViewBag.forumName)
+                                @Html.Hidden("categoryIDnull", (int)ViewBag.categoryID)
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+
+        </tbody>
+    </table>
+
+</div>

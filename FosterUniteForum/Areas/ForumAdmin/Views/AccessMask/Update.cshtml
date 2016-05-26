@@ -1,0 +1,107 @@
+﻿@using FosterUniteForum.Domain.Utility;
+@model FosterUniteForum.Data.EntityModel.AccessMask
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/ForumAdmin/Views/Shared/ForumAdminLayout.cshtml";
+    int accessMaskID = ViewBag.accessMaskID;
+    int boardID = ViewBag.boardID;
+    int accessFlag = ViewBag.accessFlag;
+    string preMaskName = ViewBag.maskName;
+    List<string> activeMaskList = ViewBag.activeMaskList;
+    AccessMaskCollection amCollection = new AccessMaskCollection();
+    Dictionary<int, string> accessMaskList = amCollection.getAccessMaskList();
+
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $(".dialog_box").fadeOut(2000);
+    });
+
+    $(document).ready(function ($) {
+        var accessSum = 0;
+        var accessMaskCheckBoxSum = document.getElementById('accessMaskCheckBoxSum');
+        $('.accessMaskCheckBox').click(function () {
+            accessSum = 0;
+            $('.accessMaskCheckBox:checked').each(function (idx, elm) {
+                accessSum += parseInt(elm.value, 10);
+            });
+
+            $('#accessMaskCheckBoxSum').val(accessSum);
+        });
+    });
+
+</script>
+<div>
+    <div>
+        <h3><b>Update Access Mask</b></h3>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            @Html.Hidden("accessMaskID", accessMaskID)
+            @Html.Hidden("boardID", boardID)
+            @Html.Hidden("accessFlag", accessFlag, new { id = "accessMaskCheckBoxSum" })
+            @Html.Hidden("preMaskName", preMaskName);
+            <table class="table">
+                <tr>
+                    <td>Name </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Name, new { placeholder = ViewBag.maskName, Class = "form-control"  })
+                        &nbsp;&nbsp;<span style="color:red"> @Html.ValidationMessageFor(m => m.Name)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Access Permissions</td>
+                    <td>
+                        @if (accessMaskList.Count != 0)
+                        {
+                            <table>
+                                @for (int i = 0; i < accessMaskList.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <label for="'amlID'+@accessMaskList.ElementAt(i).Key">
+                                                @accessMaskList.ElementAt(i).Value
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input style="margin-right:20em;margin-left:10em"
+                                                   class="accessMaskCheckBox"
+                                                   type="checkbox"
+                                                   id="'amlID'+@accessMaskList.ElementAt(i).Key"
+                                                   name="accessMask"
+                                                   value="@accessMaskList.ElementAt(i).Key"
+                                                   @(@activeMaskList.Contains(accessMaskList.ElementAt(i).Value) ? "checked" : "") />
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input class="btn btn-primary" type="submit" value="Update" />
+                        &nbsp;&nbsp;&nbsp;
+                        @Html.ActionLink(
+                                    "Back",
+                                    "Update",
+                                    "Board",
+                                    new { id = boardID },
+                                    new { Class = "btn btn-default" })
+                        &nbsp;&nbsp;&nbsp;
+                        @if (TempData["Success"] != null)
+                        {
+                            <p class="dialog_box"><span style="color:red">@TempData["Success"]</span></p>
+                        }
+                        @if (TempData["Fail"] != null)
+                        {
+                            <p class="dialog_box"><span style="color:red">@TempData["Fail"]</span></p>
+                        }
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>

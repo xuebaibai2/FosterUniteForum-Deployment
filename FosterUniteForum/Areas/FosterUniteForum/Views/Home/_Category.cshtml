@@ -1,0 +1,38 @@
+﻿@using FosterUniteForum.Data.EntityModel;
+@model List<Category>
+
+<div class="categoryDiv">
+    @foreach (Category category in Model)
+    {
+        <table class="table ">
+
+            <thead>
+                <tr class="active" style="font-size:x-small">
+                    <th style="width:500px">
+                        <span style="font-size:medium">
+                            @Html.ActionLink(
+                                category.Name,
+                                "ViewCategory",
+                                "Category",
+                                new { id = category.Id },
+                                new { Class = "btn-link" }
+                            )
+                        </span>
+                    </th>
+                    <th>
+                        TOPICS
+                    </th>
+                    <th>
+                        POSTS
+                    </th>
+                    <th>
+                        LAST POST
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @Html.Action("RenderForum", new { categoryID = category.Id })
+            </tbody>
+        </table>
+    }
+</div>

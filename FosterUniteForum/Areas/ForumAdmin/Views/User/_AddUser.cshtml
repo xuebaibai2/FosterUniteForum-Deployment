@@ -1,0 +1,136 @@
+﻿
+@using FosterUniteForum.Models;
+@model RegisterViewModel
+
+
+<div>
+    <input type="button" class="btn btn-info btn-default" data-toggle="modal" data-target="#addUser" value="Add User" />
+</div>
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="addUser" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add User</h4>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                            <tr>
+                                <td style="width:150px">First Name</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.FirstName, new { Value = "", placeholder = "First Name", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.FirstName, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">Last Name</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.LastName, new { Value = "", placeholder = "Last Name", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.LastName, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">Gender</td>
+                                <td>
+                                    @Html.RadioButtonFor(m => m.Gender, "Male") Male
+                                    @Html.RadioButtonFor(m => m.Gender, "Female") Female
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.Gender, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">Email Address</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.Email, new { Value = "", placeholder = "Email Address", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.Email, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">City</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.City, new { Value = "", placeholder = "City", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.City, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">State</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.State, new { Value = "", placeholder = "State", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.State, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">Birthday</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.Birthday, new { Value = "", placeholder = "2000/01/01", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.Birthday, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">Company Name</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.CompanyName, new { Value = "", placeholder = "Company Name", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.CompanyName, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">Company Address</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.CompanyAddress, new { Value = "", placeholder = "Company Address", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.CompanyAddress, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">Password</td>
+                                <td>
+                                    @Html.PasswordFor(m => m.Password, new { Value = "", placeholder = "Password", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.Password, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:150px">Confirm Password</td>
+                                <td>
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { Value = "", placeholder = "Confirm Password", Class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { style = "color:red" })
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Add User" />
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

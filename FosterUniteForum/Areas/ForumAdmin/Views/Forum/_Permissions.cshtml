@@ -1,0 +1,26 @@
+﻿@using FosterUniteForum.Domain.Utility;
+@model FosterUniteForum.Data.EntityModel.ForumAccess
+@{
+    List<SelectListItem> accessMaskList = ViewBag.accessMaskList;
+}
+@using (Html.BeginForm())
+{
+    <tr>
+        <td>@Model.Group.Name</td>
+        <td>@Model.AccessMask.Name</td>
+        <td>@Html.DropDownList("accessMaskFlagnull", accessMaskList, new { Class = "form-control" })</td>
+        <td>
+            <input class="btn btn-primary" type="submit" value="Update" />
+            @Html.Hidden("submitFlag", SubmitFlagUtilities.UpdateForumPermission)
+            @Html.Hidden("boardIDnull", Model.Forum.Category.BoardId)
+            @Html.Hidden("forumIDnull", Model.ForumId)
+            @Html.Hidden("groupIDnull", Model.GroupId)
+            @Html.Hidden("preForumName", Model.Forum.Name)
+            @Html.Hidden("categoryIDnull", Model.Forum.CategoryId)
+        </td>
+    </tr>
+}
+
+
+
+
