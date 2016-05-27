@@ -140,6 +140,5 @@ C:\Users\小白\Source\Repos\FosterUniteForum-Deployment\FosterUniteForum\bin\Mi
 C:\Users\小白\Source\Repos\FosterUniteForum-Deployment\FosterUniteForum\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\小白\Source\Repos\FosterUniteForum-Deployment\FosterUniteForum\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\小白\Source\Repos\FosterUniteForum-Deployment\FosterUniteForum\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\小白\Source\Repos\FosterUniteForum-Deployment\FosterUniteForum\obj\Debug\FosterUniteForum.csprojResolveAssemblyReference.cache
 C:\Users\小白\Source\Repos\FosterUniteForum-Deployment\FosterUniteForum\obj\Debug\FosterUniteForum.dll
 C:\Users\小白\Source\Repos\FosterUniteForum-Deployment\FosterUniteForum\obj\Debug\FosterUniteForum.pdb

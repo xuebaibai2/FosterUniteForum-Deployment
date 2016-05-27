@@ -13,8 +13,8 @@
 }
 @foreach (Post post in Model)
 {
-    <table class="table-condensed" style="width:1100px; border:4px solid; border-color:lightgray">
-        <tr>
+    <table class="table-condensed well" style="width:1100px; border:4px solid; border-color:lightgray">
+        <tr style="border-bottom:1px solid black">
             <td rowspan="3" style="width:200px;border-right:1px solid;border-color: lightgray; vertical-align:top;">
                 <p class="post_author text-primary">
                     @Html.ActionLink(
@@ -31,15 +31,15 @@
                 </p>
             </td>
             <td style="width:600px;vertical-align:top;">
-                <p class="top-left"> @post.Subject</p>
+                <p class="top-left"><h4><b> @post.Subject</b></h4></p>
             </td>
-            <td style="width:200px">
-                <p class="pull-right"> @post.Posted</p>
+            <td style="width:250px">
+                <span style="font-size:x-small" class="pull-right text-info">Created at: @post.Posted</span>
             </td>
         </tr>
         <tr style="height:180px">
             <td style="border-bottom:1px solid; border-color:lightgray;vertical-align:top;" colspan="2">
-                <p>@post.Body</p>
+                <p>@Html.Raw( @post.Body)</p>
             </td>
         </tr>
         <tr>

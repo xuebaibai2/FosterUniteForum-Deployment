@@ -11,7 +11,6 @@
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
     @Scripts.Render("~/Scripts/jquery.validate.min.js")
     @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -35,12 +34,13 @@
     </div>
     <div class="container body-content">
         <h2>Foster Forum</h2>
-        <div class="text-right" style="color:#150d55">It is currently @DateTime.Now.ToString()</div>
+        <div id="livetime" class="text-right text-info" style="font-size:small"></div>
+        <script src="~/Scripts/LiveClock.js"></script>
         <hr />
         @RenderBody()
         <hr />
         <footer>
-            <div class=" col-md-push-4 col-md-4">
+            <div class=" col-md-5 col-md-push-5">
                 <p>&copy; @DateTime.Now.Year - LYF-FosterUniteForum</p>
             </div>
         </footer>

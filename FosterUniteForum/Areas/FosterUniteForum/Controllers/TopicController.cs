@@ -6,6 +6,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -76,8 +77,15 @@ namespace FosterUniteForum.Areas.FosterUniteForum.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public async System.Threading.Tasks.Task<ActionResult> Create(Topic topic, string message, int forumID)
         {
+            StringBuilder sbBody = new StringBuilder();
+            sbBody.Append(HttpUtility.HtmlEncode(message));
+
+            message = sbBody.ToString();
+            message = message.Replace(Environment.NewLine, "<br />");
+
             user = fum.GetCurrentForumUser(User.Identity.GetUserId());
             string ip = Request.UserHostAddress;
             this.topic = await ts.AddTopic(topic, forumID, user);
@@ -97,13 +105,27 @@ namespace FosterUniteForum.Areas.FosterUniteForum.Controllers
         public ActionResult Edit(int id)
         {
             post = ps.GetPostByID(id);
+            StringBuilder sbBody = new StringBuilder();
+            sbBody.Append(HttpUtility.HtmlDecode( post.Body));
+            sbBody.Replace("<br />", "\n");
+
+            post.Body = sbBody.ToString();
             return View(post);
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(Post post)
         {
-            post.Edited = DateTime.Today.ToString();
+            StringBuilder sbBody = new StringBuilder();
+            sbBody.Append(HttpUtility.HtmlEncode(post.Body));
+            
+            post.Body = sbBody.ToString();
+
+            post.Body = post.Body.Replace(Environment.NewLine, "<br />");
+            post.Subject = HttpUtility.HtmlEncode(post.Subject);
+
+            post.Edited = DateTime.Now.ToString();
             ps.UpdatePostwithEditMethod(post);
             return RedirectToAction("ViewTopic", new { id = post.TopicId });
         }
@@ -113,6 +135,7 @@ namespace FosterUniteForum.Areas.FosterUniteForum.Controllers
             ViewBag.topicID = topicID;
             postList = ps.GetPostListByTopicID(topicID);
             PagedList<Post> pagedPost = new PagedList<Post>(postList, page, pageSize);
+
             user = fum.GetCurrentForumUser(User.Identity.GetUserId());
             if (user != null)
             {

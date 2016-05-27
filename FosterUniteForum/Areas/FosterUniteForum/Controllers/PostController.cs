@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -48,8 +49,16 @@ namespace FosterUniteForum.Areas.FosterUniteForum.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public async System.Threading.Tasks.Task<ActionResult> Create(Post post, string message, int mainPostID)
         {
+
+            StringBuilder sbBody = new StringBuilder();
+            sbBody.Append(HttpUtility.HtmlEncode(message));
+
+            message = sbBody.ToString();
+            message = message.Replace(Environment.NewLine, "<br />");
+
             Post mainPost = ps.GetPostByID(mainPostID);
             string ip = Request.UserHostAddress;
             user = fum.GetCurrentForumUser(User.Identity.GetUserId());
