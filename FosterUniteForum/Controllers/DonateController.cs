@@ -22,7 +22,14 @@ namespace FosterUniteForum.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            card = new Card();
+            if (Session["cardInfo"] != null)
+            {
+                card = (Card)Session["cardInfo"];
+            }
+            else
+            {
+                card = new Card();
+            }
             return View(card);
         }
 
@@ -32,11 +39,12 @@ namespace FosterUniteForum.Controllers
             CardCreateResponse cr = ps.CardCreate(card);
             if (cr.Error == null)
             {
+                Session["cardInfo"] = card; 
                 return RedirectToAction("Donate", new { ct = cr.Response.Token });
             }
             else
             {
-                TempData["InvalidCard"] = cr.Messages[0].Message;
+                TempData["ErrorMessage"] = cr.Messages[0].Message;
                 return View();
             }
         }
@@ -44,6 +52,7 @@ namespace FosterUniteForum.Controllers
         [HttpGet]
         public ActionResult Donate(string ct)
         {
+            Card c = (Card)Session["cardInfo"];
             if (ct != null)
             {
                 ViewBag.cardToken = ct;
@@ -56,6 +65,8 @@ namespace FosterUniteForum.Controllers
         [HttpPost]
         public ActionResult Donate(Charge charge, string cardToken)
         {
+            Card c = (Card)Session["cardInfo"];
+            charge.Amount *= 100;
             this.charge = new PostCharge()
             {
                 Amount = charge.Amount,
@@ -83,6 +94,9 @@ namespace FosterUniteForum.Controllers
                         Token = response.Charge.Token
                     };
                     drs.AddReceipt(receipt);
+
+                    Session.Remove("cardInfo");
+
                     return RedirectToAction("Receipt", new { token = receipt.Token });
                 }
                 else
@@ -93,7 +107,14 @@ namespace FosterUniteForum.Controllers
             }
             else
             {
-                TempData["PurchaceFailed"] = response.Messages[0].Message;
+                if (response.Messages != null)
+                {
+                    TempData["PurchaceFailed"] = response.Messages[0].Message;
+                }
+                else
+                {
+                    TempData["PurchaceFailed"] = response.Description;
+                }
                 return RedirectToAction("Donate", new { ct = cardToken });
             }
         }
